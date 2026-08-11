@@ -1,0 +1,120 @@
+name: release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Exact package.json version
+        required: true
+        type: string
+      dist_tag:
+        description: npm dist-tag (next or latest)
+        required: true
+        default: next
+        type: choice
+        options:
+          - next
+          - latest
+      stable_confirmation:
+        description: Enter publish-latest for a stable latest release
+        required: false
+        type: string
+
+concurrency:
+  group: lotor-node-sdk-release
+  cancel-in-progress: false
+
+permissions: {}
+
+jobs:
+  publish:
+    name: Verify and publish immutable package
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment: sdk-release
+    permissions:
+      contents: write
+      id-token: write
+    env:
+      LOTOR_PUBLIC_RELEASE: "1"
+    steps:
+      - name: Check out dispatched commit
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+
+      - name: Configure Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 22.14.0
+          registry-url: https://registry.npmjs.org
+
+      - name: Pin release tooling
+        run: |
+          corepack enable
+          npm install --global npm@11.5.1
+          test "$(npm --version)" = "11.5.1"
+
+      - name: Validate immutable release inputs
+        env:
+          RELEASE_VERSION: ${{ inputs.version }}
+          RELEASE_DIST_TAG: ${{ inputs.dist_tag }}
+          STABLE_CONFIRMATION: ${{ inputs.stable_confirmation }}
+        run: |
+          set -eu
+          test "$(node --print "require('./package.json').version")" = "$RELEASE_VERSION"
+          test "$(node --print "require('./package.json').private === true ? 'private' : 'public'")" = "public"
+          test "$(node --print "require('./package.json').license")" = "Apache-2.0"
+          test -f LICENSE
+          case "$RELEASE_VERSION:$RELEASE_DIST_TAG" in
+            *-rc.*:next) ;;
+            *-rc.*:*) echo "release candidates must use the next dist-tag" >&2; exit 1 ;;
+            *:latest) test "$STABLE_CONFIRMATION" = "publish-latest" ;;
+            *) echo "stable versions must use latest" >&2; exit 1 ;;
+          esac
+          if npm view "@lotor.dev/sdk@$RELEASE_VERSION" version >/dev/null 2>&1; then
+            echo "@lotor.dev/sdk@$RELEASE_VERSION already exists" >&2
+            exit 1
+          fi
+          if git rev-parse "v$RELEASE_VERSION" >/dev/null 2>&1; then
+            echo "v$RELEASE_VERSION already exists" >&2
+            exit 1
+          fi
+
+      - name: Install and verify release contents
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm test
+          pnpm api:check
+          pnpm package:check
+          git diff --exit-code
+
+      - name: Publish with npm trusted publishing
+        env:
+          RELEASE_DIST_TAG: ${{ inputs.dist_tag }}
+        run: npm publish --access public --tag "$RELEASE_DIST_TAG"
+
+      - name: Verify registry artifact
+        env:
+          RELEASE_VERSION: ${{ inputs.version }}
+        run: |
+          set -eu
+          for attempt in 1 2 3 4 5; do
+            if test "$(npm view "@lotor.dev/sdk@$RELEASE_VERSION" version 2>/dev/null || true)" = "$RELEASE_VERSION"; then
+              break
+            fi
+            test "$attempt" -lt 5
+            sleep $((attempt * 5))
+          done
+          verification_dir="$(mktemp -d)"
+          cd "$verification_dir"
+          npm init --yes >/dev/null
+          npm install --ignore-scripts --no-audit --no-fund "@lotor.dev/sdk@$RELEASE_VERSION"
+          node --input-type=module -e 'import("@lotor.dev/sdk").then((sdk) => { if (typeof sdk.LotorClient !== "function") process.exit(1) })'
+
+      - name: Create matching GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_VERSION: ${{ inputs.version }}
+        run: gh release create "v$RELEASE_VERSION" --target "$GITHUB_SHA" --title "v$RELEASE_VERSION" --generate-notes

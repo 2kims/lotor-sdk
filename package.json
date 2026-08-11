@@ -1,0 +1,62 @@
+{
+  "name": "@lotor.dev/sdk",
+  "version": "0.1.0-rc.1",
+  "description": "Lotor LWP data-plane client for Node.js",
+  "license": "Apache-2.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "CHANGELOG.md",
+    "SECURITY.md"
+  ],
+  "scripts": {
+    "example": "tsx examples/app.ts",
+    "verify": "tsx examples/authverify.ts",
+    "watch": "tsx examples/watch.ts",
+    "reconnect": "tsx examples/reconnect.ts",
+    "tls": "tsx examples/tls.ts",
+    "org": "tsx examples/org.ts",
+    "roles": "tsx examples/roles.ts",
+    "wallet": "tsx examples/wallet.ts",
+    "overage": "tsx examples/overage.ts",
+    "addon": "tsx examples/addon.ts",
+    "test": "npm run typecheck && npm run test:ownership",
+    "test:ownership": "tsx --test tests/ownership.test.ts",
+    "test:live": "tsc --outDir .tmp/live --rootDir . && node .tmp/live/tests/live-scenarios.js",
+    "typecheck": "tsc --noEmit",
+    "build": "rm -rf dist && tsc -p tsconfig.build.json",
+    "api:update": "pnpm build && node scripts/check-api.mjs --update",
+    "api:check": "pnpm build && node scripts/check-api.mjs",
+    "package:check": "pnpm build && node scripts/check-package.mjs"
+  },
+  "engines": {
+    "node": ">=22.14.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/2kims/lotor-sdk.git"
+  },
+  "homepage": "https://github.com/2kims/lotor-sdk#readme",
+  "bugs": {
+    "url": "https://github.com/2kims/lotor-sdk/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  },
+  "packageManager": "pnpm@9.15.0"
+}
