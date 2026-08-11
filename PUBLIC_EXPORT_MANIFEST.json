@@ -1,0 +1,132 @@
+{
+  "schema": 1,
+  "target": "node",
+  "source_commit": "35ca9d53c485a923801002d3b540e38595e695c4",
+  "version": "0.1.0-rc.1",
+  "files": [
+    {
+      "path": ".github/CODEOWNERS",
+      "sha256": "af177beb8470030757336b55c0174d8836f98457f8b4341ae8c1a250a179d187"
+    },
+    {
+      "path": ".github/workflows/release.yml",
+      "sha256": "e27b47ab2f508fcbd897aa3b149e40956d9d8926bbecf849a78c2e6b836923f8"
+    },
+    {
+      "path": "api/client.d.ts",
+      "sha256": "f4de1c7cb2d68bc0683c4b6f4de804102d329c412933d49cc79e9b2a3b8840c1"
+    },
+    {
+      "path": "api/index.d.ts",
+      "sha256": "3f37995c2ded55521dfcf491de2623876f29ee531e7073b1bfe8997fff190b7e"
+    },
+    {
+      "path": "api/ownership.d.ts",
+      "sha256": "64210bb84dd4e930ddb046b240414972af8d3452e25bfdbbef1ff17befebf134"
+    },
+    {
+      "path": "CHANGELOG.md",
+      "sha256": "f2bd6654f0804e68b6ac24dfc30c75b7d02266b32efdc9a2be29f087a9aff072"
+    },
+    {
+      "path": "examples/addon.ts",
+      "sha256": "2fae2bd6e8f093b8566b0b24ceea4159e76e7bac71032ea7bccdc4973079567f"
+    },
+    {
+      "path": "examples/app.ts",
+      "sha256": "16829af88cbeb677f393381fa78ea6a0179adb44b6d276e618a73ab261c065df"
+    },
+    {
+      "path": "examples/authverify.ts",
+      "sha256": "c053ea164c9564045ab6ad3be4b2549671ead21fc844332ea0a63bacb3768397"
+    },
+    {
+      "path": "examples/org.ts",
+      "sha256": "fac08315b902ae9e64b336a0f4362d293b3adafca6f06768acfdcac716f5991c"
+    },
+    {
+      "path": "examples/overage.ts",
+      "sha256": "ffd4ec0b5806421a72031c8b72b3a15ab5c88cd8f6d850302f5931f0c13fb6f0"
+    },
+    {
+      "path": "examples/reconnect.ts",
+      "sha256": "5103e18f5c441c95eb355b56e57d182611c713a18c0fd8abdc2c21022a97165c"
+    },
+    {
+      "path": "examples/roles.ts",
+      "sha256": "d9c22a2b2645d1cade75c4004c4fedd80eef9acca508d379c0885dd3d15cc1e4"
+    },
+    {
+      "path": "examples/tls.ts",
+      "sha256": "48ccdeed2d12e0b6f99574b8c528d55432f0e670302a6cca846d27939edee611"
+    },
+    {
+      "path": "examples/wallet.ts",
+      "sha256": "414b160af2ed5f2968f27ef70778326b7c0b1d320337fda87f13d728c937ff75"
+    },
+    {
+      "path": "examples/watch.ts",
+      "sha256": "525bb7f0ace3980b1d97c953feeca2c0fd8c4894289c55c640e433ca7e65b962"
+    },
+    {
+      "path": "LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    {
+      "path": "Makefile",
+      "sha256": "5758997dc346bdec13fa0085f764311ab8a08b3d60f2a461a34f1ba3c5f841b0"
+    },
+    {
+      "path": "package.json",
+      "sha256": "cae6fde6331c692987e0fb60ac12a9bf50cd134ae4dbc82b5e3816d9d6728629"
+    },
+    {
+      "path": "pnpm-lock.yaml",
+      "sha256": "c470bb31f12322975383fc30ac20cece0878c6c7ec82385f311e6a7fffa752ab"
+    },
+    {
+      "path": "README.md",
+      "sha256": "015aa66c0d9c8011ec537ff3da98808985ebfc423b066a98eaf0dc02c84e9cd3"
+    },
+    {
+      "path": "scripts/check-api.mjs",
+      "sha256": "a50e650eb7f017eb3d555b3eafaa4e550e6654ec22c84ccc34ace942c662a2c6"
+    },
+    {
+      "path": "scripts/check-package.mjs",
+      "sha256": "339d9f05919ae736eb4e6ab512df34d0152c817c33d82fa93fc5de8a890ff2d0"
+    },
+    {
+      "path": "SECURITY.md",
+      "sha256": "0c1e60238aef5ad529d4d5db74ee68661319ac65a81050e30f39d92cc258b08c"
+    },
+    {
+      "path": "src/client.ts",
+      "sha256": "786cf7c449d88f7559797ec6f166df1bc895596a9dfd76d7fce8c53e4a0b36d5"
+    },
+    {
+      "path": "src/index.ts",
+      "sha256": "af453e14dbd77ba324b70b124780c2127962034cb10e3151f13292a8c2c80484"
+    },
+    {
+      "path": "src/ownership.ts",
+      "sha256": "22cc2ad78a7072292bdeca3574dcf8299385cd28e139fd024f54693a9aca57eb"
+    },
+    {
+      "path": "src/wire.ts",
+      "sha256": "58b5f0fb3a52816bac4477cc448ca071a8ede186862d0efaa914c3a14bf4e11d"
+    },
+    {
+      "path": "tests/ownership.test.ts",
+      "sha256": "a0ef1a4a92a8de5ddcdd22aff3bfb4c865b337ec03028da450681b4f228f5bdc"
+    },
+    {
+      "path": "tsconfig.build.json",
+      "sha256": "2ed59ff71114823fc0914f9068d28dd22059fb0c9b6817d9eb0ec8e28f38f651"
+    },
+    {
+      "path": "tsconfig.json",
+      "sha256": "9e0675e179d3eda2ee742263a28dcd9636b2d47c43a01537c4b5451bb62e3969"
+    }
+  ]
+}
