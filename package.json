@@ -37,7 +37,10 @@
     "build": "rm -rf dist && tsc -p tsconfig.build.json",
     "api:update": "pnpm build && node scripts/check-api.mjs --update",
     "api:check": "pnpm build && node scripts/check-api.mjs",
-    "package:check": "pnpm build && node scripts/check-package.mjs"
+    "package:check": "pnpm build && node scripts/check-package.mjs",
+    "test:tooling": "node --test tests/tooling/compare-semver.node.mjs tests/tooling/package-contents.node.mjs tests/tooling/release-version.node.mjs",
+    "verify:release-version": "node scripts/verify-release-version.mjs",
+    "verify:package": "node scripts/verify-package-contents.mjs"
   },
   "engines": {
     "node": ">=22.14.0"
@@ -51,7 +54,9 @@
     "url": "https://github.com/2kims/lotor-sdk/issues"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "registry": "https://registry.npmjs.org/",
+    "provenance": true
   },
   "devDependencies": {
     "@types/node": "^22.10.0",
