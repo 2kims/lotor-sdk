@@ -4,6 +4,10 @@ All notable public API and compatibility changes are documented here. This
 project follows Semantic Versioning; breaking changes during `0.x` releases are
 called out explicitly.
 
+## 0.1.0-rc.2
+
+- Keep the npm package page intentionally free of repository README content.
+
 ## 0.1.0-rc.1
 
 - Add the ESM-only `@lotor.dev/sdk` Node.js package.
