@@ -1,6 +1,6 @@
 {
   "name": "@lotor.dev/sdk",
-  "version": "0.1.0-rc.1",
+  "version": "0.1.0-rc.2",
   "description": "Lotor LWP data-plane client for Node.js",
   "license": "Apache-2.0",
   "type": "module",

@@ -1,8 +1,8 @@
 {
   "schema": 1,
   "target": "node",
-  "source_commit": "35ca9d53c485a923801002d3b540e38595e695c4",
-  "version": "0.1.0-rc.1",
+  "source_commit": "186b43a8db6a5b637c563cbe8f0275e337411e5f",
+  "version": "0.1.0-rc.2",
   "files": [
     {
       "path": ".github/CODEOWNERS",
@@ -26,7 +26,7 @@
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "f2bd6654f0804e68b6ac24dfc30c75b7d02266b32efdc9a2be29f087a9aff072"
+      "sha256": "cf4d8652a975ac283388dcd7c86af0ea5d0dd3e5f506ddb7233b6289b2ee40ba"
     },
     {
       "path": "examples/addon.ts",
@@ -78,7 +78,7 @@
     },
     {
       "path": "package.json",
-      "sha256": "cae6fde6331c692987e0fb60ac12a9bf50cd134ae4dbc82b5e3816d9d6728629"
+      "sha256": "91e30bfc40302cf50a5cb3ef9a723824ae45a5a95921656e7f3e807a42292bbd"
     },
     {
       "path": "pnpm-lock.yaml",
@@ -86,7 +86,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "015aa66c0d9c8011ec537ff3da98808985ebfc423b066a98eaf0dc02c84e9cd3"
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
       "path": "scripts/check-api.mjs",
@@ -94,7 +94,7 @@
     },
     {
       "path": "scripts/check-package.mjs",
-      "sha256": "339d9f05919ae736eb4e6ab512df34d0152c817c33d82fa93fc5de8a890ff2d0"
+      "sha256": "62fe4941356fe216cc9f76529980794f276a5b8dc4fce90dd2c6ab46e1a2d594"
     },
     {
       "path": "SECURITY.md",
