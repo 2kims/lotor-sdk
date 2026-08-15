@@ -15,7 +15,7 @@ on:
 permissions: {}
 
 concurrency:
-  group: release-please-${{ github.ref }}
+  group: release-please-${{ github.event_name == 'workflow_dispatch' && inputs.tag != '' && format('recovery-{0}', inputs.tag) || github.ref }}
   cancel-in-progress: false
 
 jobs:
@@ -52,7 +52,7 @@ jobs:
   validate:
     name: Validate exact release source
     needs: release
-    if: ${{ always() && vars.RELEASE_AUTOMATION_ENABLED == 'true' && vars.NPM_TRUSTED_PUBLISHING_READY == 'true' && github.ref == 'refs/heads/main' && ((needs.release.result == 'success' && needs.release.outputs.release_created == 'true') || (github.event_name == 'workflow_dispatch' && inputs.tag != '')) }}
+    if: ${{ always() && vars.RELEASE_AUTOMATION_ENABLED == 'true' && vars.NPM_TRUSTED_PUBLISHING_READY == 'true' && ((github.ref == 'refs/heads/main' && needs.release.result == 'success' && needs.release.outputs.release_created == 'true') || (github.event_name == 'workflow_dispatch' && inputs.tag != '' && github.ref == format('refs/tags/{0}', inputs.tag))) }}
     runs-on: ubuntu-latest
     timeout-minutes: 25
     permissions:
@@ -273,7 +273,7 @@ jobs:
   package:
     name: Package exact release source
     needs: validate
-    if: ${{ needs.validate.result == 'success' && needs.validate.outputs.should_publish == 'true' && vars.RELEASE_AUTOMATION_ENABLED == 'true' && vars.NPM_TRUSTED_PUBLISHING_READY == 'true' && github.ref == 'refs/heads/main' }}
+    if: ${{ needs.validate.result == 'success' && needs.validate.outputs.should_publish == 'true' && vars.RELEASE_AUTOMATION_ENABLED == 'true' && vars.NPM_TRUSTED_PUBLISHING_READY == 'true' && (github.ref == 'refs/heads/main' || github.ref == format('refs/tags/{0}', needs.validate.outputs.tag)) }}
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:
@@ -401,7 +401,7 @@ jobs:
     needs:
       - validate
       - package
-    if: ${{ needs.package.result == 'success' && vars.RELEASE_AUTOMATION_ENABLED == 'true' && vars.NPM_TRUSTED_PUBLISHING_READY == 'true' && github.ref == 'refs/heads/main' }}
+    if: ${{ needs.package.result == 'success' && vars.RELEASE_AUTOMATION_ENABLED == 'true' && vars.NPM_TRUSTED_PUBLISHING_READY == 'true' && (github.ref == 'refs/heads/main' || github.ref == format('refs/tags/{0}', needs.validate.outputs.tag)) }}
     environment: npm-publish
     runs-on: ubuntu-latest
     timeout-minutes: 10

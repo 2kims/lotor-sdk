@@ -18,7 +18,9 @@ Every job fails closed unless both repository variables equal `true`:
 
 ## One-time activation
 
-1. Create `release-automation` and `npm-publish` environments restricted to `main`.
+1. Create both environments with selected deployment refs:
+   - Restrict `release-automation` to branch `main` only.
+   - Allow `npm-publish` from branch `main` and protected tags matching `v*`; tag access is required so recovery provenance identifies the released commit.
 2. Configure the 2K Bot credentials:
    - Repository variable `BOT_2K_APP_ID`: `4600682` (registered for inventory and administration)
    - Repository variable `BOT_2K_CLIENT_ID`: `Iv23ct8NTwJ8yiM1WYo3` (used to create the installation token)
@@ -35,7 +37,7 @@ Every job fails closed unless both repository variables equal `true`:
 
 5. Protect `v*` tags from updates and deletion.
 6. Keep repository auto-merge disabled. This private repository's current GitHub plan does not provide branch protection, so an operator must merge each release PR manually with squash only after `Validate PR title` and `Test` pass against the current `main`. If the repository is upgraded or made public, require both checks with strict up-to-date branches before reconsidering auto-merge.
-7. Confirm both environments admit only the intended refs described above.
+7. Confirm both environments admit only the intended refs from step 1.
 8. Enable `NPM_TRUSTED_PUBLISHING_READY`, then `RELEASE_AUTOMATION_ENABLED`.
 
 Do not add an `NPM_TOKEN` fallback.
@@ -49,13 +51,14 @@ Conventional commits merged to `main` update the Release Please PR. After `Valid
 Recovery is only for an existing non-draft GitHub release whose npm publication did not finish:
 
 ```bash
+tag=v0.1.0-rc.2
 gh workflow run .github/workflows/release-please.yml \
   --repo 2kims/lotor-sdk \
-  --ref main \
-  -f tag=v0.1.0-rc.2
+  --ref "$tag" \
+  -f tag="$tag"
 ```
 
-If npm already contains the exact version, recovery succeeds as a no-op. Never move a tag or rebuild an existing npm version.
+The dispatch ref and `tag` input must be the same immutable release tag. This binds `GITHUB_SHA`—and therefore npm provenance—to the package source commit. Recovery uses a tag-specific concurrency group so a push to `main` cannot displace a pending recovery. If npm already contains the exact version, recovery succeeds as a no-op. Never move a tag or rebuild an existing npm version.
 
 ## Emergency shutdown
 
