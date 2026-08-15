@@ -19,8 +19,11 @@ Every job fails closed unless both repository variables equal `true`:
 ## One-time activation
 
 1. Create `release-automation` and `npm-publish` environments restricted to `main`.
-2. Put `NERV_OPS_PRIVATE_KEY` only in the `release-automation` environment and set repository variable `NERV_OPS_CLIENT_ID`.
-3. Give the GitHub App only Contents and Pull requests read/write permissions for this repository.
+2. Configure the 2K Bot credentials:
+   - Repository variable `BOT_2K_APP_ID`: `4600682` (registered for inventory and administration)
+   - Repository variable `BOT_2K_CLIENT_ID`: `Iv23ct8NTwJ8yiM1WYo3` (used to create the installation token)
+   - Repository secret `BOT_2K_KEY`: the 2K Bot private key
+3. Install 2K Bot on this repository with only Contents and Pull requests read/write permissions.
 4. Configure the npm trusted publisher for `@lotor.dev/sdk`:
 
    ```text

@@ -31,12 +31,12 @@ jobs:
       release_created: ${{ steps.release.outputs.release_created }}
       tag_name: ${{ steps.release.outputs.tag_name }}
     steps:
-      - name: Create repository-scoped nerv-ops token
+      - name: Create repository-scoped 2K Bot token
         id: app-token
         uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
         with:
-          client-id: ${{ vars.NERV_OPS_CLIENT_ID }}
-          private-key: ${{ secrets.NERV_OPS_PRIVATE_KEY }}
+          client-id: ${{ vars.BOT_2K_CLIENT_ID }}
+          private-key: ${{ secrets.BOT_2K_KEY }}
           permission-contents: write
           permission-pull-requests: write
 
