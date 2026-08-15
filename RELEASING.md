@@ -23,7 +23,7 @@ Every job fails closed unless both repository variables equal `true`:
    - Repository variable `BOT_2K_APP_ID`: `4600682` (registered for inventory and administration)
    - Repository variable `BOT_2K_CLIENT_ID`: `Iv23ct8NTwJ8yiM1WYo3` (used to create the installation token)
    - Repository secret `BOT_2K_KEY`: the 2K Bot private key
-3. Install 2K Bot on this repository with only Contents and Pull requests read/write permissions.
+3. Install 2K Bot on this repository with only Contents, Issues, and Pull requests read/write permissions. Issues write is required for Release Please's `autorelease:*` labels.
 4. Configure the npm trusted publisher for `@lotor.dev/sdk`:
 
    ```text
@@ -34,14 +34,15 @@ Every job fails closed unless both repository variables equal `true`:
    ```
 
 5. Protect `v*` tags from updates and deletion.
-6. Confirm required PR checks pass and both environments admit only `main`.
-7. Enable `NPM_TRUSTED_PUBLISHING_READY`, then `RELEASE_AUTOMATION_ENABLED`.
+6. Keep repository auto-merge disabled. This private repository's current GitHub plan does not provide branch protection, so an operator must merge each release PR manually with squash only after `Validate PR title` and `Test` pass against the current `main`. If the repository is upgraded or made public, require both checks with strict up-to-date branches before reconsidering auto-merge.
+7. Confirm both environments admit only the intended refs described above.
+8. Enable `NPM_TRUSTED_PUBLISHING_READY`, then `RELEASE_AUTOMATION_ENABLED`.
 
 Do not add an `NPM_TOKEN` fallback.
 
 ## Normal release
 
-Conventional commits merged to `main` update the Release Please PR. Its merge synchronizes `package.json`, `.release-please-manifest.json`, and `CHANGELOG.md`. Release Please then creates `v<version>` and the workflow validates, packages, and publishes that exact source. Stable releases use `latest`; prereleases use `next`.
+Conventional commits merged to `main` update the Release Please PR. After `Validate PR title` and `Test` pass against the current `main`, an operator squash-merges that PR; auto-merge is intentionally disabled. Its merge synchronizes `package.json`, `.release-please-manifest.json`, and `CHANGELOG.md`. Release Please then creates `v<version>` and the workflow validates, packages, and publishes that exact source. Stable releases use `latest`; prereleases use `next`.
 
 ## Recovery
 
