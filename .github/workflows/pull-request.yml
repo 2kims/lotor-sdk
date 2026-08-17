@@ -1,0 +1,70 @@
+name: Pull Request
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened, ready_for_review]
+
+permissions:
+  contents: read
+
+jobs:
+  title:
+    name: Validate PR title
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check Conventional Commit format
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+        run: |
+          node <<'NODE'
+          const title = process.env.PR_TITLE ?? "";
+          const pattern = /^(feat|fix|perf|revert|docs|style|refactor|test|chore|release)(\([a-z0-9][a-z0-9._/-]*\))?!?: \S.*$/;
+          if (!pattern.test(title)) {
+            console.error("Use a Conventional Commit PR title");
+            process.exit(1);
+          }
+          NODE
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Check out repository without persisted credentials
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 24.18.0
+
+      - name: Install pnpm
+        run: npm install --global pnpm@9.15.0
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Verify release metadata and SDK
+        run: |
+          npm run verify:release-version
+          pnpm test
+          pnpm api:check
+          pnpm package:check
+          npm run test:tooling
+          npm run verify:package
+          git diff --exit-code
+
+      - name: Lint GitHub Actions workflows
+        env:
+          ACTIONLINT_VERSION: 1.7.7
+          ACTIONLINT_SHA256: 023070a287cd8cccd71515fedc843f1985bf96c436b7effaecce67290e7e0757
+        run: |
+          archive="actionlint_${ACTIONLINT_VERSION}_linux_amd64.tar.gz"
+          curl --fail --location --silent --show-error --output "$RUNNER_TEMP/$archive" \
+            "https://github.com/rhysd/actionlint/releases/download/v${ACTIONLINT_VERSION}/$archive"
+          echo "$ACTIONLINT_SHA256  $RUNNER_TEMP/$archive" | sha256sum --check --strict
+          tar --extract --gzip --file "$RUNNER_TEMP/$archive" --directory "$RUNNER_TEMP" actionlint
+          "$RUNNER_TEMP/actionlint"

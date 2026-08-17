@@ -8,6 +8,7 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
+const sourceManifest = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
 const temporary = mkdtempSync(join(tmpdir(), "lotor-node-sdk-package-"));
 
 function run(command, args, cwd = temporary) {
@@ -17,7 +18,7 @@ function run(command, args, cwd = temporary) {
 try {
   const packed = JSON.parse(execFileSync(
     "npm",
-    ["pack", "--json", "--pack-destination", temporary],
+    ["pack", "--ignore-scripts", "--json", "--pack-destination", temporary],
     { cwd: root, encoding: "utf8" },
   ));
   assert.equal(packed.length, 1);
@@ -122,14 +123,11 @@ process.stdout.write("packed Node SDK runtime surface passed\\n");
   run(process.execPath, ["runtime.mjs"], consumer);
 
   const packedManifest = JSON.parse(readFileSync(join(consumer, "node_modules", "@lotor.dev", "sdk", "package.json"), "utf8"));
-  const sourceManifest = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
   assert.equal(packedManifest.name, "@lotor.dev/sdk");
   assert.equal(packedManifest.version, sourceManifest.version);
   assert.equal(packedManifest.license, "Apache-2.0");
-  assert.equal(packedManifest.private, process.env.LOTOR_PUBLIC_RELEASE === "1" ? undefined : true);
-  if (process.env.LOTOR_PUBLIC_RELEASE === "1") {
-    assert.equal(readFileSync(join(consumer, "node_modules", "@lotor.dev", "sdk", "README.md")).length, 0);
-  }
+  assert.equal(packedManifest.private, undefined);
+  assert.equal(readFileSync(join(consumer, "node_modules", "@lotor.dev", "sdk", "README.md")).length, 0);
   process.stdout.write(`clean packed consumer passed for ${packedManifest.name}@${packedManifest.version}\n`);
 } finally {
   rmSync(temporary, { recursive: true, force: true });
