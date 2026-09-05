@@ -11,6 +11,14 @@ called out explicitly.
 - Add application Control APIs for resource lifecycle, Catalog management,
   organization provisioning, and resource-type configuration.
 
+## [0.1.1-rc.2](https://github.com/2kims/lotor-sdk/compare/v0.1.0-rc.2...v0.1.1-rc.2) (2026-09-05)
+
+
+### Miscellaneous Chores
+
+* **release:** automate trusted npm publishing ([e1857c6](https://github.com/2kims/lotor-sdk/commit/e1857c654d03681a10d88dba09059bdf176f41be))
+* sync [@lotor](https://github.com/lotor).dev/sdk public export ([#4](https://github.com/2kims/lotor-sdk/issues/4)) ([d932daf](https://github.com/2kims/lotor-sdk/commit/d932dafa54ddfd047e4f3f007b4b3349758b5ac6))
+
 ## 0.1.0-rc.2
 
 - Keep the npm package page intentionally free of repository README content.
