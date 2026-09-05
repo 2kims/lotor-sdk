@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "target": "node",
-  "source_commit": "75be4c35bb6fed1f9ad5cf432a3661a5c6acc9b9",
+  "source_commit": "f1bed65faa38820e296d97bf6325f0fd038aee43",
   "version": "0.1.0-rc.2",
   "files": [
     {
@@ -10,11 +10,11 @@
     },
     {
       "path": ".github/workflows/pull-request.yml",
-      "sha256": "b709976dfdfbea3056f58aacb805b0fea67989659e5aa7248bcbedd7d107ecd8"
+      "sha256": "1df59e6fc5be2c528e810c491d26c1092dec49909208519cac1b1a6b45d89608"
     },
     {
       "path": ".github/workflows/release-please.yml",
-      "sha256": "0b34e70c7558998e78f4bbb4f03a3c48b6892b161fd0287355931a89e7fd71ab"
+      "sha256": "0771e0ba4a0156a87b52971b616e7d7793cb3a24bcd61ec1f880eb70a63993c2"
     },
     {
       "path": ".gitignore",
