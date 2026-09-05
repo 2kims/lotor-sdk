@@ -5,7 +5,7 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const declarations = ["client.d.ts", "index.d.ts", "ownership.d.ts"];
+const declarations = ["client.d.ts", "gateway-assertion.d.ts", "index.d.ts", "ownership.d.ts"];
 const update = process.argv.slice(2).includes("--update");
 
 for (const declaration of declarations) {

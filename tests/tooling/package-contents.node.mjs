@@ -9,7 +9,7 @@ const packageJson = JSON.parse(fs.readFileSync("package.json", "utf8"));
 describe("npm release package policy", () => {
   test("accepts the current built package", () => {
     assert.equal(current.package.name, "@lotor.dev/sdk");
-    assert.equal(current.paths.length, 13);
+    assert.equal(current.paths.length, 17);
   });
 
   test("rejects unsafe or unexpected package paths", () => {

@@ -334,7 +334,7 @@ jobs:
           validation="$(PACK_JSON="$pack_json" OUTPUT_DIR="$output_dir" EXPECTED_VERSION="$EXPECTED_VERSION" node <<'NODE'
           import fs from "node:fs";
           import path from "node:path";
-          const required = ["CHANGELOG.md", "LICENSE", "README.md", "SECURITY.md", "dist/client.d.ts", "dist/client.js", "dist/index.d.ts", "dist/index.js", "dist/ownership.d.ts", "dist/ownership.js", "dist/wire.d.ts", "dist/wire.js", "package.json"];
+          const required = ["CHANGELOG.md", "LICENSE", "README.md", "SECURITY.md", "dist/client.d.ts", "dist/client.js", "dist/control.d.ts", "dist/control.js", "dist/gateway-assertion.d.ts", "dist/gateway-assertion.js", "dist/index.d.ts", "dist/index.js", "dist/ownership.d.ts", "dist/ownership.js", "dist/wire.d.ts", "dist/wire.js", "package.json"];
           const payload = JSON.parse(fs.readFileSync(process.env.PACK_JSON, "utf8"));
           if (!Array.isArray(payload) || payload.length !== 1) throw new Error("npm pack must create exactly one package");
           const data = payload[0];
@@ -532,7 +532,7 @@ jobs:
           from pathlib import PurePosixPath
 
           tarball_path, expected_version = sys.argv[1:]
-          required = {"CHANGELOG.md", "LICENSE", "README.md", "SECURITY.md", "dist/client.d.ts", "dist/client.js", "dist/index.d.ts", "dist/index.js", "dist/ownership.d.ts", "dist/ownership.js", "dist/wire.d.ts", "dist/wire.js", "package.json"}
+          required = {"CHANGELOG.md", "LICENSE", "README.md", "SECURITY.md", "dist/client.d.ts", "dist/client.js", "dist/control.d.ts", "dist/control.js", "dist/gateway-assertion.d.ts", "dist/gateway-assertion.js", "dist/index.d.ts", "dist/index.js", "dist/ownership.d.ts", "dist/ownership.js", "dist/wire.d.ts", "dist/wire.js", "package.json"}
           seen = set()
           manifest_member = None
           with tarfile.open(tarball_path, mode="r:gz") as archive:
