@@ -37,6 +37,10 @@ try {
     "dist/index.js",
     "dist/ownership.d.ts",
     "dist/ownership.js",
+    "dist/resource-crypto.d.ts",
+    "dist/resource-crypto.js",
+    "dist/resource.d.ts",
+    "dist/resource.js",
     "dist/wire.d.ts",
     "dist/wire.js",
     "package.json",
@@ -71,11 +75,49 @@ import {
   GatewayAssertionVerifier,
   LotorClient,
   LotorControlClient,
+  LotorResourceClient,
   OwnershipResolver,
   ownershipAddress,
   type ClientOptions,
   type Ownership,
+  type AccountResourceList,
+  type AccountInvitationList,
+  type AccountInvitationMutation,
+  type ResourcePayloadManifest,
+  type ResourcePayloadAccessLease,
+  type ResourceCredentialExchange,
+  type ResourceExecutionAuthorization,
+  type ResourceLinkSendResult,
+  type ResourceCollaboratorList,
+  type ResourceSearchList,
+  type OrganizationE2EEPolicy,
+  type ResourceCollaborationPolicyMutation,
 } from "@lotor.dev/sdk";
+
+export async function workloadExchange(client: LotorResourceClient): Promise<ResourceCredentialExchange> {
+  return client.exchangeCredential({ audience: "https://provider.example.test", method: "POST", path: "/proxy", bodySha256: "a".repeat(64), querySha256: "b".repeat(64) });
+}
+
+export async function workloadExecute(client: LotorResourceClient): Promise<ResourceExecutionAuthorization> {
+  const plan = await client.preflightExecution("integration:provider", { method: "POST", path: "/proxy", contentType: "application/json", requestBodyDigest: "a".repeat(64), requestBodySize: 2 });
+  return client.commitExecution(plan.resource, plan);
+}
+
+export async function userGraph(client: LotorControlClient, token: string) {
+  const user = client.forUser(token);
+  const directory: AccountResourceList = await user.accountResources({ parent: "project:one", types: ["vault"], limit: 10 });
+  const inbox: AccountInvitationList = await user.accountInvitations({ limit: 10 });
+  const accepted: AccountInvitationMutation = await user.acceptAccountInvitation("invite");
+  const manifest: ResourcePayloadManifest = await user.resourcePayload("vault:one", "config");
+  const lease: ResourcePayloadAccessLease = await user.accessResourcePayload("vault:one", "config", manifest.payloadVersion);
+  const bytes: Buffer = await user.downloadResourcePayload(lease);
+  const linked: ResourceLinkSendResult = await user.sendResourceLinks("vault:one", { changes: [{ action: "grant", relation: "member", subject: "user:bob" }] });
+  const collaborators: ResourceCollaboratorList = await user.resourceCollaborators("vault:one", { view: "effective" });
+  const resources: ResourceSearchList = await user.searchResources({ filters: { collaborator: { subjects: ["user:bob"] } } });
+  const e2ee: OrganizationE2EEPolicy = await user.organizationE2EEPolicy("organization:one");
+  const guestPolicy: ResourceCollaborationPolicyMutation = await user.setResourceCollaborationPolicy("vault:one", { guests: { allowed: false } });
+  return { directory, inbox, accepted, manifest, bytes, linked, collaborators, resources, e2ee, guestPolicy };
+}
 
 const options: ClientOptions = { host: "localhost", port: 7420, reconnect: false };
 const clientType: typeof LotorClient = LotorClient;
@@ -117,6 +159,19 @@ import * as sdk from "@lotor.dev/sdk";
 
 assert.equal(typeof sdk.LotorClient, "function");
 assert.equal(typeof sdk.LotorControlClient, "function");
+assert.equal(typeof sdk.LotorResourceClient, "function");
+assert.equal(typeof sdk.LotorResourceClient.prototype.exchangeCredential, "function");
+assert.equal(typeof sdk.LotorResourceClient.prototype.preflightExecution, "function");
+assert.equal(typeof sdk.LotorResourceClient.prototype.commitExecution, "function");
+assert.equal(typeof sdk.LotorControlClient.prototype.preflightResourceLinks, "function");
+assert.equal(typeof sdk.LotorControlClient.prototype.commitResourceLinks, "function");
+assert.equal(typeof sdk.LotorControlClient.prototype.resourceCollaborators, "function");
+assert.equal(typeof sdk.LotorControlClient.prototype.searchResources, "function");
+assert.equal(typeof sdk.LotorControlClient.prototype.organizationE2EEPolicy, "function");
+assert.equal(typeof sdk.LotorControlClient.prototype.configureOrganizationE2EE, "function");
+assert.equal(typeof sdk.LotorControlClient.prototype.setResourceCollaborationPolicy, "function");
+assert.equal(typeof sdk.protectProviderRequest, "function");
+assert.equal(typeof sdk.openProviderResponse, "function");
 assert.equal(typeof sdk.GatewayAssertionVerifier, "function");
 assert.equal(typeof sdk.OwnershipResolver, "function");
 assert.equal(typeof sdk.ownershipAddress, "function");

@@ -1,6 +1,6 @@
 {
   "name": "@lotor.dev/sdk",
-  "version": "0.1.1-rc.2",
+  "version": "0.2.0-rc.1",
   "description": "Lotor LWP data-plane client for Node.js",
   "license": "Apache-2.0",
   "type": "module",
@@ -33,16 +33,13 @@
     "test": "npm run typecheck && npm run test:ownership && npm run test:gateway-assertion && npm run test:control",
     "test:ownership": "tsx --test tests/ownership.test.ts",
     "test:gateway-assertion": "tsx --test tests/gateway-assertion.test.ts",
-    "test:control": "tsx --test tests/control.test.ts",
+    "test:control": "tsx --test tests/control.test.ts tests/resource.test.ts tests/resource-execution.test.ts tests/resource-crypto.test.ts",
     "test:live": "tsc --outDir .tmp/live --rootDir . && node .tmp/live/tests/live-scenarios.js",
     "typecheck": "tsc --noEmit",
     "build": "rm -rf dist && tsc -p tsconfig.build.json",
     "api:update": "pnpm build && node scripts/check-api.mjs --update",
     "api:check": "pnpm build && node scripts/check-api.mjs",
-    "package:check": "pnpm build && node scripts/check-package.mjs",
-    "test:tooling": "node --test tests/tooling/*.node.mjs",
-    "verify:release-version": "node scripts/verify-release-version.mjs",
-    "verify:package": "node scripts/verify-package-contents.mjs"
+    "package:check": "pnpm build && node scripts/check-package.mjs"
   },
   "engines": {
     "node": ">=22.14.0"
@@ -56,9 +53,7 @@
     "url": "https://github.com/2kims/lotor-sdk/issues"
   },
   "publishConfig": {
-    "access": "public",
-    "registry": "https://registry.npmjs.org/",
-    "provenance": true
+    "access": "public"
   },
   "devDependencies": {
     "@types/node": "^22.10.0",
