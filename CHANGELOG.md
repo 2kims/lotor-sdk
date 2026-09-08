@@ -6,18 +6,52 @@ called out explicitly.
 
 ## Unreleased
 
+### 0.2.0-rc.1 candidate (not published)
+
+- Add bounded, abortable durable-operation polling to the Control client.
+  Failed and cancelled operations are returned for caller handling; mutations
+  are never retried.
+
+- Add `LotorResourceClient.exchangeCredential` for workload authentication using
+  only a resource credential and publishable key. Responses retain the
+  server-selected environment and assertion header type. Redirects, ambient
+  cookies and application-authority fallback are disabled.
+- Add typed workload execution preflight/commit, preserving the capability token,
+  resource/catalog/payload revisions and encrypted execution context. Responses
+  must match the preflight binding.
+- Add caller-key `protectProviderRequest` and `openProviderResponse` helpers,
+  using the existing Go AES-256-GCM envelope and command-bound AAD. A Docker
+  Go/Node cross-language certificate covers both directions with a 1 MiB body.
+  Real Control/box execution certification remains follow-up work.
+
+- Add isolated `forUser` clients. User denials never retry with application
+  authority; application credentials stay on the server.
+- Add typed member directories, invitation inbox operations, resource
+  credentials and organization billing portal sessions.
+- Add generic resource candidate search, link preflight/commit/send, unlink,
+  collaborator listing and structured resource search. Link capabilities remain
+  header-only and delegated denials never retry with application authority.
+- Add delegated organization E2EE policy read/configuration and resource guest
+  policy mutation. The application secret selects scope; `forUser` supplies the
+  required actor and denied requests never elevate.
+- Add published Catalog discovery, resource-bound reads and generic imports.
+- Breaking: directory projections and catalog bindings require canonical
+  resource references rather than reconstructed IDs. Match the Control API
+  deployment before upgrading consumers.
+- Preserve principal identity, resource-key metadata and pending encryption.
+- Add typed resource payload manifests and version-bound access leases, retaining
+  delegated user authority and raw versus encrypted representation. These reads
+  do not download or decrypt objects.
+- Add bounded, cancellable payload downloads with size/digest verification and
+  no SDK-injected Control credentials or cookies on storage requests.
+- Add raw/encrypted payload upload intents, credential-isolated object uploads
+  and capability-bound commits with resource/version fencing.
+- Add payload rewrap and idempotent deletion, preserving custody attestations
+  and pending deletion state.
+- Customer-organization SSO/SCIM runtime support is not included in this candidate.
+
 - Add framework-neutral gateway assertion verification and Node HTTP
   middleware with exact authority, request, origin, expiry, and replay checks.
-- Add application Control APIs for resource lifecycle, Catalog management,
-  organization provisioning, and resource-type configuration.
-
-## [0.1.1-rc.2](https://github.com/2kims/lotor-sdk/compare/v0.1.0-rc.2...v0.1.1-rc.2) (2026-09-05)
-
-
-### Miscellaneous Chores
-
-* **release:** automate trusted npm publishing ([e1857c6](https://github.com/2kims/lotor-sdk/commit/e1857c654d03681a10d88dba09059bdf176f41be))
-* sync [@lotor](https://github.com/lotor).dev/sdk public export ([#4](https://github.com/2kims/lotor-sdk/issues/4)) ([d932daf](https://github.com/2kims/lotor-sdk/commit/d932dafa54ddfd047e4f3f007b4b3349758b5ac6))
 
 ## 0.1.0-rc.2
 
