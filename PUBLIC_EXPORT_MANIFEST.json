@@ -1,8 +1,8 @@
 {
   "schema": 1,
   "target": "node",
-  "source_commit": "f1bed65faa38820e296d97bf6325f0fd038aee43",
-  "version": "0.1.0-rc.2",
+  "source_commit": "e85885c22be1bb04a1414ecd741cc9254a28a80d",
+  "version": "0.2.0-rc.1",
   "files": [
     {
       "path": ".github/CODEOWNERS",
@@ -10,23 +10,19 @@
     },
     {
       "path": ".github/workflows/pull-request.yml",
-      "sha256": "1df59e6fc5be2c528e810c491d26c1092dec49909208519cac1b1a6b45d89608"
+      "sha256": "c8d63f8210c6d3f9e5a558501cab32636f877061cc4ab3082b6184c51d8f8680"
     },
     {
-      "path": ".github/workflows/release-please.yml",
-      "sha256": "0771e0ba4a0156a87b52971b616e7d7793cb3a24bcd61ec1f880eb70a63993c2"
-    },
-    {
-      "path": ".gitignore",
-      "sha256": "f6ef045443422022b938e3d1e4940e321b217d813faebf175bdb6711b59a5531"
-    },
-    {
-      "path": ".release-please-manifest.json",
-      "sha256": "cc678224b9b7334d956d2a2a6ad7c6124e4ea6d32bfaf46e005349713c3ca52c"
+      "path": ".github/workflows/release.yml",
+      "sha256": "e27b47ab2f508fcbd897aa3b149e40956d9d8926bbecf849a78c2e6b836923f8"
     },
     {
       "path": "api/client.d.ts",
       "sha256": "f4de1c7cb2d68bc0683c4b6f4de804102d329c412933d49cc79e9b2a3b8840c1"
+    },
+    {
+      "path": "api/control.d.ts",
+      "sha256": "24e1f73d03eeb940591fca0ee8726f9d3c237bfd6d916f5c48743c5af0b1cc4e"
     },
     {
       "path": "api/gateway-assertion.d.ts",
@@ -34,15 +30,23 @@
     },
     {
       "path": "api/index.d.ts",
-      "sha256": "3e1ea4d2d9ce12ed64ef178648f5cc99b8a487bb832466e63a3939e22cab0008"
+      "sha256": "5ede6206aeba27f79697e14a4efeb3729f6475175edc6bae1665b112aa003944"
     },
     {
       "path": "api/ownership.d.ts",
       "sha256": "64210bb84dd4e930ddb046b240414972af8d3452e25bfdbbef1ff17befebf134"
     },
     {
+      "path": "api/resource-crypto.d.ts",
+      "sha256": "64a442b8d445e501f2c37ac76e4576df42f714d07d80fa6b2cdd5f343d80d53e"
+    },
+    {
+      "path": "api/resource.d.ts",
+      "sha256": "e52dbf7ddd1d169b2d6af0bb2a325ccaca713bf01e7786fbab20536b3d3ecc89"
+    },
+    {
       "path": "CHANGELOG.md",
-      "sha256": "bdd13f10664d107dd093eb4fee826f61d7144c98fda3f7a8e7bbcd29687ab7c6"
+      "sha256": "5dd8cda917e4227c7230ef20ca097e3c06ba465ea8bd9fa0a909f6199a2d846a"
     },
     {
       "path": "examples/addon.ts",
@@ -94,7 +98,7 @@
     },
     {
       "path": "package.json",
-      "sha256": "61aaefba7f7b78fc7e59713bb66479dc8b055955554d627b928fb470d36821c9"
+      "sha256": "c1e5e972fc559a7d72ad031364d1e3dc3864bd34a7541a0057f885e9b4cb43a8"
     },
     {
       "path": "pnpm-lock.yaml",
@@ -105,32 +109,12 @@
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
-      "path": "release-please-config.json",
-      "sha256": "2c7a9274dc6f61999050555a5b5bd236b68f352c5406572f0fd5cd539fea8c9d"
-    },
-    {
-      "path": "RELEASING.md",
-      "sha256": "7b2ff7bfb2ec66e05a3653bea47948a89eac17783397afd320c66b4791ff0b30"
-    },
-    {
       "path": "scripts/check-api.mjs",
-      "sha256": "7e14aa842d0ea7a48eb064841a0b9ddfe1378c4290157c411e23ace9f7f18a20"
+      "sha256": "4b7729a76006c92691fa39d05f6fc84be5355eb977d7c1e9df56cb0aa3a16ab8"
     },
     {
       "path": "scripts/check-package.mjs",
-      "sha256": "4822f88a375a64c945dd78bd5f1158e3026f63926b75a86b49219a28721d7065"
-    },
-    {
-      "path": "scripts/compare-semver.mjs",
-      "sha256": "ba54197a082a5c2c2410ba8838e57653c8e3e428f8cee0a1d972f2476d90228d"
-    },
-    {
-      "path": "scripts/verify-package-contents.mjs",
-      "sha256": "aeacb8a1e1d077029a227f59ed7da6a553dc4700e830b9f0d611de51476c63d4"
-    },
-    {
-      "path": "scripts/verify-release-version.mjs",
-      "sha256": "9ae3cbbc7d38bf44f920f04bae516a24d2d473b533dc2ed438e63f7dff6f8a8b"
+      "sha256": "937b5315a18e569fe27b03af11510d0d515fcf399ae81e2cae6d91b985c8ae9e"
     },
     {
       "path": "SECURITY.md",
@@ -142,7 +126,7 @@
     },
     {
       "path": "src/control.ts",
-      "sha256": "2cc66b314aa706dc96b43560cc4b8ca1b234a77e11d39ad3d962ce2451bb71ff"
+      "sha256": "b6d1300d67dea0cf73b9a890752103493463507a3d9b4f97c7074c13b8360af9"
     },
     {
       "path": "src/gateway-assertion.ts",
@@ -150,11 +134,19 @@
     },
     {
       "path": "src/index.ts",
-      "sha256": "0216145bb8252c44358366d7dab6b957660428b197b82b3b81ed27b50b7b125c"
+      "sha256": "a33b1c334fbaa3365f1f7b4b75f468e256a3165ca2b5d8eff01d45f84b0cf80c"
     },
     {
       "path": "src/ownership.ts",
       "sha256": "22cc2ad78a7072292bdeca3574dcf8299385cd28e139fd024f54693a9aca57eb"
+    },
+    {
+      "path": "src/resource-crypto.ts",
+      "sha256": "3108b090f0beb65771ef41ddb08954efa21b3e7be649ef27e465667bc987fa35"
+    },
+    {
+      "path": "src/resource.ts",
+      "sha256": "992af7386d629d6ab5af7b8effdfc0ac333e63aa33c08ca82e59106031fca5d2"
     },
     {
       "path": "src/wire.ts",
@@ -162,7 +154,7 @@
     },
     {
       "path": "tests/control.test.ts",
-      "sha256": "d89d3e24152a13351ab3172bc8bf449d01767aa3077cde7b78183d0a856082b1"
+      "sha256": "89ed4369c1f5bbb07b43209c1c38fcc284b8ddcf3ef2f16fd836b555803fb826"
     },
     {
       "path": "tests/gateway-assertion.test.ts",
@@ -173,20 +165,24 @@
       "sha256": "a0ef1a4a92a8de5ddcdd22aff3bfb4c865b337ec03028da450681b4f228f5bdc"
     },
     {
+      "path": "tests/resource-crypto-interop.mjs",
+      "sha256": "d4a86ba9c9c5edc2e7d6d1776b6905e0ae7499942b340c2e02a8837ec75c6b05"
+    },
+    {
+      "path": "tests/resource-crypto.test.ts",
+      "sha256": "991c054c9d8dfe340d7e43eb8b6859cd3b27c68fcf5b86dd53e11d01ae067a75"
+    },
+    {
+      "path": "tests/resource-execution.test.ts",
+      "sha256": "0de78207fd0da672d3093dad50e9213d9a1c29528cf10f0195e512c5ac32a60b"
+    },
+    {
+      "path": "tests/resource.test.ts",
+      "sha256": "9b71e2dd57ec40fbabcbf80c371bca3defc2c0824e83631c67999ab2add5873d"
+    },
+    {
       "path": "tests/testdata/gateway_assertion_v1.json",
       "sha256": "975549bd87f1fe7d93e709bff0d4ae0c77eafc493824e723af241110835aca8f"
-    },
-    {
-      "path": "tests/tooling/compare-semver.node.mjs",
-      "sha256": "7f6bed852d1c810f0e40df81346cdc12ee2a41fe893bffaeba765c8489f2e37f"
-    },
-    {
-      "path": "tests/tooling/package-contents.node.mjs",
-      "sha256": "1a4cd37837f2cc4224dcd1ae379914adb22fab8533af2de3d08219842cde3256"
-    },
-    {
-      "path": "tests/tooling/release-version.node.mjs",
-      "sha256": "05e76de0eca613ee7b4f8bbed64719476cd98c2f0e71f3335db10ef4fed05ff2"
     },
     {
       "path": "tsconfig.build.json",

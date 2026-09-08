@@ -1,8 +1,5 @@
 name: Pull Request
 
-env:
-  LOTOR_PUBLIC_RELEASE: "1"
-
 on:
   pull_request:
     types: [opened, edited, synchronize, reopened, ready_for_review]
@@ -47,27 +44,10 @@ jobs:
       - name: Install pnpm
         run: npm install --global pnpm@9.15.0
 
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Verify release metadata and SDK
+      - name: Verify SDK and public package
         run: |
-          npm run verify:release-version
+          pnpm install --frozen-lockfile
           pnpm test
           pnpm api:check
           pnpm package:check
-          npm run test:tooling
-          npm run verify:package
           git diff --exit-code
-
-      - name: Lint GitHub Actions workflows
-        env:
-          ACTIONLINT_VERSION: 1.7.7
-          ACTIONLINT_SHA256: 023070a287cd8cccd71515fedc843f1985bf96c436b7effaecce67290e7e0757
-        run: |
-          archive="actionlint_${ACTIONLINT_VERSION}_linux_amd64.tar.gz"
-          curl --fail --location --silent --show-error --output "$RUNNER_TEMP/$archive" \
-            "https://github.com/rhysd/actionlint/releases/download/v${ACTIONLINT_VERSION}/$archive"
-          echo "$ACTIONLINT_SHA256  $RUNNER_TEMP/$archive" | sha256sum --check --strict
-          tar --extract --gzip --file "$RUNNER_TEMP/$archive" --directory "$RUNNER_TEMP" actionlint
-          "$RUNNER_TEMP/actionlint"
