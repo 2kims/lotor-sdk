@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "target": "node",
-  "source_commit": "a9eefb4a4b45795cdfa6a37031167aff9a030d17",
+  "source_commit": "ddc79e65b6cf81bc47db8625f9b9fce871f40c3f",
   "version": "0.2.0-rc.1",
   "files": [
     {
@@ -14,7 +14,7 @@
     },
     {
       "path": ".github/workflows/release.yml",
-      "sha256": "e27b47ab2f508fcbd897aa3b149e40956d9d8926bbecf849a78c2e6b836923f8"
+      "sha256": "d9945e2c8f194f7d40271dcefaa10fa9a28c2e01c710eb4960de87cff9bccc12"
     },
     {
       "path": "api/client.d.ts",

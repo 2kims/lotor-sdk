@@ -45,16 +45,24 @@ jobs:
           persist-credentials: false
 
       - name: Configure Node.js
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
-          node-version: 22.14.0
+          node-version: 24.18.0
           registry-url: https://registry.npmjs.org
 
-      - name: Pin release tooling
+      - name: Verify bundled npm supports trusted publishing
         run: |
           corepack enable
-          npm install --global npm@11.5.1
-          test "$(npm --version)" = "11.5.1"
+          npm_version="$(npm --version)"
+          NPM_VERSION="$npm_version" node <<'NODE'
+          const match = /^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$/.exec(process.env.NPM_VERSION ?? "");
+          if (!match) throw new Error(`Could not parse bundled npm version: ${process.env.NPM_VERSION ?? ""}`);
+          const actual = match.slice(1).map(Number);
+          const minimum = [11, 5, 1];
+          const comparison = actual.findIndex((value, index) => value !== minimum[index]);
+          if (comparison !== -1 && actual[comparison] < minimum[comparison]) throw new Error(`Bundled npm ${actual.join(".")} is below required 11.5.1`);
+          console.log(`Verified bundled npm ${actual.join(".")}.`);
+          NODE
 
       - name: Validate immutable release inputs
         env:
